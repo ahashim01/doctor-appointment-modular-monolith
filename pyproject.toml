@@ -1,0 +1,12 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "doctor_appointment_app.settings"
+python_files = ["tests.py", "test*.py", "*tests.py"]
+django_debug_mode = true
+addopts = "--reuse-db --disable-warnings"
