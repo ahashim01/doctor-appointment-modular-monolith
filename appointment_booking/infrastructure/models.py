@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.utils.timezone import now
 
 
 class AppointmentModel(models.Model):
@@ -13,7 +14,7 @@ class AppointmentModel(models.Model):
     slot_id = models.UUIDField()
     patient_id = models.UUIDField()
     patient_name = models.CharField(max_length=255)
-    reserved_at = models.DateTimeField(auto_now_add=True)
+    reserved_at = models.DateTimeField(default=now)
     is_completed = models.BooleanField(default=False)
     is_canceled = models.BooleanField(default=False)
 

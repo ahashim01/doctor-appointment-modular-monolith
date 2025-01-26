@@ -1,5 +1,3 @@
-import uuid
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,12 +37,8 @@ class MarkAppointmentCompletedController(APIView):
 
     def post(self, request, appointment_id):
         service = DoctorAppointmentManagementService(appointment_repository=AppointmentRepositoryAdapter())
-        try:
-            appointment_uuid = uuid.UUID(appointment_id)
-        except ValueError:
-            return Response({"detail": "Invalid appointment ID."}, status=status.HTTP_400_BAD_REQUEST)
 
-        success = service.mark_appointment_completed(appointment_uuid)
+        success = service.mark_appointment_completed(appointment_id)
         if success:
             return Response({"detail": "Appointment marked as completed."}, status=status.HTTP_200_OK)
         return Response({"detail": "Unable to complete appointment."}, status=status.HTTP_400_BAD_REQUEST)
@@ -57,12 +51,8 @@ class CancelAppointmentController(APIView):
 
     def post(self, request, appointment_id):
         service = DoctorAppointmentManagementService(appointment_repository=AppointmentRepositoryAdapter())
-        try:
-            appointment_uuid = uuid.UUID(appointment_id)
-        except ValueError:
-            return Response({"detail": "Invalid appointment ID."}, status=status.HTTP_400_BAD_REQUEST)
 
-        success = service.cancel_appointment(appointment_uuid)
+        success = service.cancel_appointment(appointment_id)
         if success:
             return Response({"detail": "Appointment canceled."}, status=status.HTTP_200_OK)
         return Response({"detail": "Unable to cancel appointment."}, status=status.HTTP_400_BAD_REQUEST)

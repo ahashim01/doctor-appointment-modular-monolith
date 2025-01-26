@@ -17,7 +17,7 @@ class DoctorAppointmentManagementService:
         """
         Retrieve all upcoming appointments (not canceled, not completed, and time is in the future).
         """
-        now = datetime.now(datetime.timezone.utc)
+        now = datetime.now()
         return self.appointment_repository.find_upcoming(now)
 
     def mark_appointment_completed(self, appointment_id: uuid.UUID) -> bool:
