@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from appointment_booking.application.use_cases.book_appointment_use_case import BookAppointmentUseCase
+from appointment_booking.infrastructure.gateways.notification_gateway import NotificationGateway
 from appointment_booking.infrastructure.repositories.appointment_repository import AppointmentRepository
 
 from .serializers import BookAppointmentSerializer
@@ -20,7 +21,13 @@ class BookAppointmentController(APIView):
             patient_id = serializer.validated_data["patient_id"]
             patient_name = serializer.validated_data["patient_name"]
 
-            use_case = BookAppointmentUseCase(appointment_repository=AppointmentRepository())
+            # Instantiate dependencies
+            appointment_repo = AppointmentRepository()
+            notification_gateway = NotificationGateway()
+
+            use_case = BookAppointmentUseCase(
+                appointment_repository=appointment_repo, notification_gateway=notification_gateway
+            )
             appointment = use_case.execute(slot_id=slot_id, patient_id=patient_id, patient_name=patient_name)
 
             if not appointment:

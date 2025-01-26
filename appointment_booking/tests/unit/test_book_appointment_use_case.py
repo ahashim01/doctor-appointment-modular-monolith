@@ -9,7 +9,10 @@ from appointment_booking.domain.entities import Appointment
 class TestBookAppointmentUseCase(unittest.TestCase):
     def setUp(self):
         self.mock_repo = MagicMock()
-        self.use_case = BookAppointmentUseCase(appointment_repository=self.mock_repo)
+        self.mock_gateway = MagicMock()
+        self.use_case = BookAppointmentUseCase(
+            appointment_repository=self.mock_repo, notification_gateway=self.mock_gateway
+        )
 
     def test_slot_already_booked(self):
         # Setup
