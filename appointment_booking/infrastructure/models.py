@@ -14,6 +14,8 @@ class AppointmentModel(models.Model):
     patient_id = models.UUIDField()
     patient_name = models.CharField(max_length=255)
     reserved_at = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
+    is_canceled = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Appointment({self.patient_name}, {self.slot_id})"
